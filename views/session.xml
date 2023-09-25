@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
 <!--            <xpath expr="//button[@name='validate_closing_control']" position="after">-->
             <xpath expr="//header" position="inside">
-                <button name="%(enz_bank_cash_adjustment.action_pos_change_payments)d" type="action" string="Change Payments" attrs="{'invisible':[('state','!=','closed')]}" context="{'default_session_id':id}"/>
+                <button name="%(enz_bank_cash_adjustment.action_pos_change_payments)d" type="action" string="Change Payments" context="{'default_session_id':id}"/>
             </xpath>
         </field>
     </record>
