@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="pos_session_inherit" model="ir.ui.view">
+        <field name="name">POS Session</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr="//button[@name='validate_closing_control']" position="after">-->
+            <xpath expr="//header" position="inside">
+                <button name="%(enz_bank_cash_adjustment.action_pos_change_payments)d" type="action" string="Change Payments" attrs="{'invisible':[('state','!=','closed')]}" context="{'default_session_id':id}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="balance_report_view">
+        <t t-call="web.html_container">
+            <t t-call="enz_bank_cash_adjustment.petroleum_header">
+                <div class="page">
+                    <h2>
+                        <center>Partner Statement</center>
+                    </h2>
+                    <ul style="list-style-type:none">
+                        <t t-if="docs.from_date">
+                            <li>
+                                <b>From :
+                                    <t t-esc="docs.from_date"/>
+                                </b>
+                            </li>
+                        </t>
+                        <t t-if="docs.to_date">
+                            <li>
+                                <b>To :
+                                    <t t-esc="docs.to_date"/>
+                                </b>
+                            </li>
+                        </t>
+                        <t t-if="docs.partner_id">
+                            <li>
+                                <b>Party :
+                                    <t t-esc="docs.partner_id.name"/>
+                                </b>
+                            </li>
+                        </t>
+<!--                        <t t-if="docs.branch_id.id">-->
+<!--                            <li>-->
+<!--                                <b>Branch :-->
+<!--                                    <t t-esc="docs.branch_id.name"/>-->
+<!--                                </b>-->
+<!--                            </li>-->
+<!--                        </t>-->
+                        <t t-if="docs.company_id.id">
+                            <li>
+                                <b>Company :
+                                    <t t-esc="docs.company_id.name"/>
+                                </b>
+                            </li>
+                        </t>
+                    </ul>
+                    <br/><table style="width:100%;text-align:center;">
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Opening Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.old_balance())"/>
+                            </th>
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th style="border:1px solid black;">Sl No</th>
+                            <th style="border:1px solid black;">Date</th>
+                            <th style="border:1px solid black;">Journal Entry</th>
+                            <th style="border:1px solid black;">Partner</th>
+                            <th style="border:1px solid black;">Label</th>
+                            <th style="border:1px solid black;">Debit</th>
+                            <th style="border:1px solid black;">Credit</th>
+<!--                            <th style="border:1px solid black;">Balance</th>-->
+                        </tr>
+                        <t t-set="i" t-value="1"/>
+                        <t t-foreach="docs.print_all()" t-as="o">
+                            <tr style="border:1px solid black;page-break-inside: avoid;">
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="i"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.date"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.move_id.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.partner_id.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="'%.2f' % (o.debit)"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="'%.2f' % (o.credit)"/>
+                                </td>
+<!--                                <td style="border:1px solid black;page-break-inside:avoid;">-->
+<!--                                    <t t-esc="'%.2f' % (o.balance)"/>-->
+<!--                                </td>-->
+                            </tr>
+                            <t t-set="i" t-value="i+1"/>
+                        </t>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="5">
+
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_debit())"/>
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_credit())"/>
+                            </th>
+<!--                            <th style="text-align:center;">-->
+<!--                                <t t-esc="'%.2f' % (docs.total_balance_lines())"/>-->
+<!--                            </th>-->
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_balance_lines())"/>
+                            </th>
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Closing Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_balance())"/>
+                            </th>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="account_balance_report_view">
+        <t t-call="web.html_container">
+            <t t-call="enz_bank_cash_adjustment.petroleum_header">
+                <div class="page">
+                    <h2>
+                        <center>Account Statement</center>
+                    </h2>
+                    <ul style="list-style-type:none">
+                        <t t-if="docs.from_date">
+                            <li>
+                                <b>From :
+                                    <t t-esc="docs.from_date"/>
+                                </b>
+                            </li>
+                        </t>
+                        <t t-if="docs.to_date">
+                            <li>
+                                <b>To :
+                                    <t t-esc="docs.to_date"/>
+                                </b>
+                            </li>
+                        </t>
+                        <t t-if="docs.account_id">
+                            <li>
+                                <b>Account :
+                                    <t t-esc="docs.account_id.name"/>
+                                </b>
+                            </li>
+                        </t>
+<!--                        <t t-if="docs.branch_id.id">-->
+<!--                            <li>-->
+<!--                                <b>Branch :-->
+<!--                                    <t t-esc="docs.branch_id.name"/>-->
+<!--                                </b>-->
+<!--                            </li>-->
+<!--                        </t>-->
+                        <t t-if="docs.company_id.id">
+                            <li>
+                                <b>Company :
+                                    <t t-esc="docs.company_id.name"/>
+                                </b>
+                            </li>
+                        </t>
+                    </ul>
+                    <br/><br/><table style="width:100%;text-align:center;">
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Opening Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.old_balance())"/>
+                            </th>
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th style="border:1px solid black;">Sl No</th>
+                            <th style="border:1px solid black;">Date</th>
+                            <th style="border:1px solid black;">Journal Entry</th>
+                            <th style="border:1px solid black;">Account</th>
+                            <th style="border:1px solid black;">Label</th>
+                            <th style="border:1px solid black;">Debit</th>
+                            <th style="border:1px solid black;">Credit</th>
+<!--                            <th style="border:1px solid black;">Balance</th>-->
+                        </tr>
+                        <t t-set="i" t-value="1"/>
+                        <t t-foreach="docs.print_all()" t-as="o">
+                            <tr style="border:1px solid black;page-break-inside: avoid;">
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="i"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.date"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.move_id.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.account_id.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="'%.2f' % (o.debit)"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="'%.2f' % (o.credit)"/>
+                                </td>
+<!--                                <td style="border:1px solid black;page-break-inside:avoid;">-->
+<!--                                    <t t-esc="'%.2f' % (o.balance)"/>-->
+<!--                                </td>-->
+                            </tr>
+                            <t t-set="i" t-value="i+1"/>
+                        </t>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="5">
+
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_debit())"/>
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_credit())"/>
+                            </th>
+<!--                            <th style="text-align:center;">-->
+<!--                                <t t-esc="'%.2f' % (docs.total_balance_lines())"/>-->
+<!--                            </th>-->
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_balance_lines())"/>
+                            </th>
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Closing Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_balance())"/>
+                            </th>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="bankaccount_balance_report_view">
+        <t t-call="web.html_container">
+            <t t-call="enz_bank_cash_adjustment.petroleum_header">
+                <div class="page">
+                    <h2>
+                        <center>Bank Statement</center>
+                    </h2>
+                    <ul style="list-style-type:none">
+                        <t t-if="docs.from_date">
+                            <li>
+                                <b>From :
+                                    <t t-esc="docs.from_date"/>
+                                </b>
+                            </li>
+                        </t>
+                        <t t-if="docs.to_date">
+                            <li>
+                                <b>To :
+                                    <t t-esc="docs.to_date"/>
+                                </b>
+                            </li>
+                        </t>
+                        <t t-if="docs.journal_id">
+                            <li>
+                                <b>Bank Account :
+                                    <t t-esc="docs.journal_id.name"/>
+                                </b>
+                            </li>
+                        </t>
+<!--                        <t t-if="docs.branch_id.id">-->
+<!--                            <li>-->
+<!--                                <b>Branch :-->
+<!--                                    <t t-esc="docs.branch_id.name"/>-->
+<!--                                </b>-->
+<!--                            </li>-->
+<!--                        </t>-->
+                        <t t-if="docs.company_id.id">
+                            <li>
+                                <b>Company :
+                                    <t t-esc="docs.company_id.name"/>
+                                </b>
+                            </li>
+                        </t>
+                    </ul>
+                    <br/><table style="width:100%;text-align:center;">
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Opening Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.old_balance())"/>
+                            </th>
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th style="border:1px solid black;">Sl No</th>
+                            <th style="border:1px solid black;">Date</th>
+                            <th style="border:1px solid black;">Journal Entry</th>
+                            <th style="border:1px solid black;">Account</th>
+                            <th style="border:1px solid black;">Label</th>
+                            <th style="border:1px solid black;">Debit</th>
+                            <th style="border:1px solid black;">Credit</th>
+<!--                            <th style="border:1px solid black;">Balance</th>-->
+                        </tr>
+                        <t t-set="i" t-value="1"/>
+                        <t t-foreach="docs.print_all()" t-as="o">
+                            <tr style="border:1px solid black;page-break-inside: avoid;">
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="i"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.date"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.move_id.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.account_id.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="o.name"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="'%.2f' % (o.debit)"/>
+                                </td>
+                                <td style="border:1px solid black;page-break-inside:avoid;">
+                                    <t t-esc="'%.2f' % (o.credit)"/>
+                                </td>
+<!--                                <td style="border:1px solid black;page-break-inside:avoid;">-->
+<!--                                    <t t-esc="'%.2f' % (o.balance)"/>-->
+<!--                                </td>-->
+                            </tr>
+                            <t t-set="i" t-value="i+1"/>
+                        </t>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="5">
+
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_debit())"/>
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_credit())"/>
+                            </th>
+<!--                            <th style="text-align:center;">-->
+<!--                                <t t-esc="'%.2f' % (docs.total_balance_lines())"/>-->
+<!--                            </th>-->
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_balance_lines())"/>
+                            </th>
+                        </tr>
+                        <tr style="border:1px solid black;page-break-inside: avoid;">
+                            <th colspan="6">
+                                Closing Balance
+                            </th>
+                            <th style="text-align:center;">
+                                <t t-esc="'%.2f' % (docs.total_balance())"/>
+                            </th>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

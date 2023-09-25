@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <report id="stmt_report_id"
+                model="partner.stmt"
+                string="Partner Statement"
+                report_type="qweb-pdf"
+                name="enz_bank_cash_adjustment.balance_report_view"
+                file="enz_bank_cash_adjustment.balance_report_view"/>
+    <report id="accountstmt_report_id"
+                model="account.stmt"
+                string="Account Statement"
+                report_type="qweb-pdf"
+                name="enz_bank_cash_adjustment.account_balance_report_view"
+                file="enz_bank_cash_adjustment.account_balance_report_view"/>
+    <report id="bankaccountstmt_report_id"
+                model="bank.stmt"
+                string="Bank/Cash Statement"
+                report_type="qweb-pdf"
+                name="enz_bank_cash_adjustment.bankaccount_balance_report_view"
+                file="enz_bank_cash_adjustment.bankaccount_balance_report_view"/>
+</odoo>

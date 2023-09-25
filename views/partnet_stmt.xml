@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_partner_stmt_form" model="ir.ui.view">
+        <field name="name">partner.stmt.form</field>
+        <field name="model">partner.stmt</field>
+        <field name="arch" type="xml">
+            <form string="Balance Report">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                            <field name="balance"/>
+                        </group>
+                        <group>
+                            <field name="branch_id" invisible="1"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="create_report" string="Statement Tree" type="object" class="btn-primary"/>
+                        <button name="print_reports" string="Statement Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_partner_stmt" model="ir.actions.act_window">
+        <field name="name">Partner Statement Report</field>
+        <field name="res_model">partner.stmt</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Partner Statement" id="menu_partner_stmt"
+              action="action_partner_stmt" sequence="9"
+              parent="account.menu_finance_reports"/>
+</odoo>

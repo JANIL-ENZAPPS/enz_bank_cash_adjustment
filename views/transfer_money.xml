@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_transfer_money_tree" model="ir.ui.view">
+        <field name="name">transfer.money.tree</field>
+        <field name="model">transfer.money</field>
+        <field name="arch" type="xml">
+            <tree string="Transfer Money">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="ref"/>
+                <field name="form_account_id"/>
+                <field name="to_account_id"/>
+                <field name="amount"/>
+                <field name="move_id"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_transfer_money_form" model="ir.ui.view">
+        <field name="name">transfer.money.form</field>
+        <field name="model">transfer.money</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Money">
+                <header>
+                    <button name="post" string="Post" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('state','=','posted')]}"/>
+                    <button name="reset_draft" string="Reset Draft" type="object"
+                            attrs="{'invisible':[('state','=','draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="ref" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="form_account_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="to_account_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="amount" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="move_id" invisible="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="adjustment_id" invisible="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="company_id" readonly="1"/>
+                            <field name="cash_transfer" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_transfer_money" model="ir.actions.act_window">
+        <field name="name">Transfer Money</field>
+        <field name="res_model">transfer.money</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Money Transfer!.
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Transfer Money"
+              id="menu_transfer_money" sequence="3"
+              parent="point_of_sale.menu_point_of_sale" action="action_transfer_money"
+    />
+</odoo>

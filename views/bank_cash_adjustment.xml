@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_bank_cash_adjustment_tree" model="ir.ui.view">
+        <field name="name">bank.cash.adjustment.tree</field>
+        <field name="model">bank.cash.adjustment</field>
+        <field name="arch" type="xml">
+            <tree string="Bank/Cash Adjustment">
+                <field name="name"/>
+                <field name="from_date"/>
+                <field name="to_date"/>
+                <field name="account_id"/>
+                <field name="opening_balance"/>
+                <field name="closing_balance"/>
+<!--                <field name="bank_account_id"/>-->
+<!--                <field name="amount"/>-->
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_bank_cash_adjustment_form" model="ir.ui.view">
+        <field name="name">bank.cash.adjustment.form</field>
+        <field name="model">bank.cash.adjustment</field>
+        <field name="arch" type="xml">
+            <form string="Bank/Cash Adjustment">
+                <header>
+                    <button name="verified" string="Verified" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+                    <button name="create_cash_transfer" string="Cash Transfer" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+                    <button name="create_transfer" string="Transfer" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','verified')]}"/>
+                    <button name="completed" string="Completed" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','verified')]}"/>
+                    <button name="reset_draft" string="Reset To Draft" type="object" attrs="{'invisible':[('state','!=','verified')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                     <div class="oe_button_box" name="button_box">
+                        <button name="show_cash_transfers" type="object" class="oe_stat_button" icon="fa-money" string="Cash Transfers"  attrs="{'invisible': [('cash_transfer_count', '=', 0)]}">
+                        </button>
+                         <button name="show_transfers" type="object" class="oe_stat_button" icon="fa-paperclip" string="Transfers"  attrs="{'invisible': [('transfer_count', '=', 0)]}">
+                        </button>
+                     </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="from_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="to_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="account_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="opening_balance" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="closing_balance" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group>
+<!--                            <field name="bank_account_id"/>-->
+<!--                            <field name="amount"/>-->
+                            <field name="company_id" readonly="1"/>
+                            <field name="transfer_count" invisible="1"/>
+                            <field name="cash_transfer_count" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bank_cash_adjustment" model="ir.actions.act_window">
+        <field name="name">Bank Cash Adjustment</field>
+        <field name="res_model">bank.cash.adjustment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Bank/Cash Adjustment!.
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Bank Cash Adjustment"
+              id="menu_bank_cash_adjustment" sequence="3"
+              parent="point_of_sale.menu_point_of_sale" action="action_bank_cash_adjustment"
+    />
+</odoo>

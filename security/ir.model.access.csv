@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bank_cash_adjustment,bank.cash.adjustmentgroup_user,model_bank_cash_adjustment,base.group_user,1,1,1,1
+access_transfer_money,transfer.moneygroup_user,model_transfer_money,base.group_user,1,1,1,1
+access_partner_stmt,access_partner_stmt_name,model_partner_stmt,base.group_user,1,1,1,1
+access_account_stmt,access_account_stmt_name,model_account_stmt,base.group_user,1,1,1,1
+access_bank_stmt,access_bank_stmt_name,model_bank_stmt,base.group_user,1,1,1,1
+access_pos_change_payments,access_pos_change_payments,model_pos_change_payments,base.group_user,1,1,1,1
+access_pos_change_payments_lines,access_pos_change_payments_lines,model_pos_change_payments_lines,base.group_user,1,1,1,1
+
